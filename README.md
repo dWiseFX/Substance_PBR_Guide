@@ -9,11 +9,8 @@ THE PBR GUIDE BY ALLEGORITHMIC - PART 1
 * Light Rays
 
 * Absorption and Scattering - Transparency and Translucency
-
 * Diffuse and Specular Reflection - Microfacet Theory
-
 * Color
-
 * BRDF
 * Energy Conservation
 * Fresnel Effect - F0 (Fresnel Reflectance at 0 Degrees)
@@ -21,3 +18,6 @@ THE PBR GUIDE BY ALLEGORITHMIC - PART 1
 * Linear Space Rendering
 * Key characteristics of PBR
 
+test line-----------------
+    code block
+test line-----------------
