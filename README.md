@@ -6,10 +6,10 @@ THE PBR GUIDE BY ALLEGORITHMIC - PART 1
 
 # Light and Matter : The theory of Physically-Based Rendering and Shading
 ## TABLE OF CONTENTS
-*Light Rays
-*Absorption and Scattering - Transparency and Translucency
-*Diffuse and Specular Reflection - Microfacet Theory
-*Color
+* Light Rays
+* Absorption and Scattering - Transparency and Translucency
+* Diffuse and Specular Reflection - Microfacet Theory
+* Color
 
 BRDF
 Energy Conservation
