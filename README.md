@@ -26,4 +26,5 @@ test line-----------------
 
 test line-----------------
 
-*reference: <https://www.fis.uni-bonn.de/en/recherchetools/infobox/professionals/what-remote-sensing/reflection-and-absorption>
+# reference
+<https://www.fis.uni-bonn.de/en/recherchetools/infobox/professionals/what-remote-sensing/reflection-and-absorption>
