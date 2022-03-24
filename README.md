@@ -30,13 +30,15 @@ THE PBR GUIDE BY ALLEGORITHMIC - PART 1
 
  이를 통해 광선이 시작지점에서 열과 같은 다른 형태의 에너지로 변하는 다른 지점으로 이동할 때 광선의 경로를 시각화할 수 있다.
 
- 서페이스에 닿는 광선을 입사광선이라고 하고 그것이 닿는 각도를 입사각이라고 한다.
+ 서페이스에 닿는 광선을 입사광선이라고 하고 그것이 닿는 각도를 입사각이라고 한다.[test]
+
+[test]: testtest
 
 
 
 ![Alt text](/img/figure01.png)
 
-[test]<img src="/img/figure01.png" width="450px" height="300px" title="px(픽셀) 크기 설정" alt="RubberDuck"></img><br/>
+<img src="/img/figure01.png" width="450px" height="300px" title="px(픽셀) 크기 설정" alt="RubberDuck"></img><br/>
 
 
 
