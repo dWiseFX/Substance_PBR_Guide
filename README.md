@@ -34,8 +34,9 @@ THE PBR GUIDE BY ALLEGORITHMIC - PART 1
 
 
 
-![figure01](/img/figure01.png)
+![Alt text](/img/figure01.png)
 
+<img src="/img/figure01.png" width="450px" height="300px" title="px(픽셀) 크기 설정" alt="RubberDuck"></img><br/>
 
 
 
