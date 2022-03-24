@@ -38,7 +38,7 @@ THE PBR GUIDE BY ALLEGORITHMIC - PART 1
 <!--
 ![figure01](/img/figure01.png)
 -->
-<img src="/img/figure01.png" width="450px" height="300px" title="10px" alt="figure01"></img><br/>
+<img src="/img/figure01.png" width="450px" height="300px" title="figure01" alt="alternative text"></img><br/>*caption test*
 -->
 
 
