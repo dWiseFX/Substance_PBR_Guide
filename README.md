@@ -26,19 +26,20 @@ THE PBR GUIDE BY ALLEGORITHMIC - PART 1
  이 가이드에서는 물리 기반 렌더링(PBR) 모델의 물리학에 대한 이론을 논의한다. 우리는 광선의 행동양식을 조사하는 것으로 시작하여 PBR의 주요 특성을 정의하는 작업을 할 것이다.
 
 ## Light Rays
- 빛의 광선 모델은 광선이 공기와 같은 균질한 투명 매질(homogeneous transparent medium)에서 직선의 궤적을 갖는다는 것을 나타낸다. 광선 모델은 또한 광선이 불투명한 물체(opaque objects)와 같은 서페이스를 만날 때 또는 공기에서 물을 지나는 것과 같이 다른 매질을 통과할 때 예측 가능한 방식으로 행동한다고 말한다.
+ 빛의 광선 모델은 광선이 공기와 같은 균질한 투명 매질(homogeneous transparent medium)[^HomogeneousMedium]에서 직선의 궤적을 갖는다는 것을 나타낸다. 광선 모델은 또한 광선이 불투명한 물체(opaque objects)와 같은 서페이스를 만날 때 또는 공기에서 물을 지나는 것과 같이 다른 매질을 통과할 때 예측 가능한 방식으로 행동한다고 말한다.
 
  이를 통해 광선이 시작지점에서 열과 같은 다른 형태의 에너지로 변하는 다른 지점으로 이동할 때 광선의 경로를 시각화할 수 있다.
 
- 서페이스에 닿는 광선을 입사광선이라고 하고 그것이 닿는 각도를 입사각이라고 한다.[^test]
+ 서페이스에 닿는 광선을 입사광선이라고 하고 그것이 닿는 각도를 입사각이라고 한다.
 
-[^test]: testtest
+[^HomogeneousMedium]: homogeneous medium
 
 
-
-![Alt text](/img/figure01.png)
-
-<img src="/img/figure01.png" width="450px" height="300px" title="px(픽셀) 크기 설정" alt="RubberDuck"></img><br/>
+<!--
+![figure01](/img/figure01.png)
+<!--
+<img src="/img/figure01.png" width="450px" height="300px" title="10px" alt="figure01"></img><br/>
+-->
 
 
 
