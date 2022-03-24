@@ -35,7 +35,7 @@ THE PBR GUIDE BY ALLEGORITHMIC - PART 1
 [^HomogeneousMedium]: homogeneous medium
 
 
-<!--
+
 ![figure01](/img/figure01.png)
 <!--
 <img src="/img/figure01.png" width="450px" height="300px" title="10px" alt="figure01"></img><br/>
