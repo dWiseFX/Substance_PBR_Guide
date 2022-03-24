@@ -34,9 +34,7 @@ THE PBR GUIDE BY ALLEGORITHMIC - PART 1
 
 
 
-![Alt text](/path/img/figure01.png)
-
-
+![Alt text](/img/figure01.png)
 
 
 
