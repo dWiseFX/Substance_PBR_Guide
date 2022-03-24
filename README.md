@@ -9,7 +9,7 @@ THE PBR GUIDE BY ALLEGORITHMIC - PART 1
 ## TABLE OF CONTENTS
 * 광선(Light Rays)
 * 흡수(Absorption)와 산란(Scattering)[^scattering_diffuse_difference] - 투명도(Transparency)와 반투명(Translucency)
-* 확산(Diffuse)과 정반사(Specular Reflection) - Microfacet Theory
+* 확산(Diffuse)과 정반사(Specular Reflection) - 미세표면 이론(Microfacet Theory)
 * Color
 * BRDF
 * Energy Conservation
@@ -125,22 +125,22 @@ THE PBR GUIDE BY ALLEGORITHMIC - PART 1
 
  확산 반사(Diffuse Reflection)는 굴절된 빛이다. 광선은 한 매질에서 다른 매질로 전달된다. 광선이 오브젝트에 들어간다고 할 때, 빛은 이 오브젝트 내에서 여러 번 산란된다. 그것은 마침내 물체 밖으로 다시 굴절되어 처음에 들어갔던 거의 같은 지점에서 원래의 매질로 되돌아간다(Figure 06).
 
+ 확산 물질은 흡수성이다. 굴절된 빛이 그러한 물질에서 너무 오래 이동하면 완전히 흡수될 수 있다. 빛이 이 물질을 빠져나가면 진입 지점에서 아주 작은 거리만 이동했을 가능성이 크다.
+
+ 따라서 들어가는 지점과 나오는 지점간의 거리는 무시할 수 있다. 전통적인 셰이딩에서 확산 반사에 사용되는 램버트(Lambertian) 모델은 서페이스 거칠기를 고려하지 않는다. 그러나 오렌-나야르(Oren-Nayar) 모델과 같은 다른 확산 반사 모델은 이러한 거칠기를 반영한다.
+
+ 높은 산란과 낮은 흡수(high scattering and low absorption)를 모두 갖는 재료를 참여 매질(participating media) 또는 반투명 물질(translucent materials)이라고 한다. 예를 들어 연기, 우유, 피부, 옥 및 대리석이 있다. 광선의 들어오고 나가는 지점 사이의 차이가 더 이상 무시할 수 없는 것으로 간주되는 피하산란(subsurface scattering)의 추가 모델링으로 우유, 피부, 옥 및 대리석과 같은 렌더링이 가능할 수 있다. 연기 또는 안개와 같이 매우 다양하고 산란 및 흡수가 매우 낮은 매질을 정확하게 렌더링하려면 몬테카를로 시뮬레이션(Monte Carlo simulations)[^Monte]과 같은 훨씬 더 느린 방법이 요구될 수 있다.
+
 <p align="center">
-  <img src="/img/figure06.jpg" alt="figure06" width="75%" height="75%" /> 
+  <img src="/img/figure06.png" alt="figure06" width="75%" height="75%" /> 
   <p align="center">
   Figure 06: 한 매질에서 다른 매질로 이동하는 광선이 물체 내부에서 산란
   </p>
 </p>
 
- 확산 물질은 흡수성이다. 굴절된 빛이 그러한 물질에서 너무 오래 이동하면 완전히 흡수될 수 있다. 빛이 이 물질을 빠져나가면 진입 지점에서 아주 작은 거리만 이동했을 가능성이 크다.
-
- 따라서 들어가는 지점과 나오는 지점간의 거리는 무시할 수 있다. 전통적인 셰이딩에서 확산 반사에 사용되는 램버트(Lambertian) 모델은 서페이스 거칠기를 고려하지 않는다. 그러나 오렌-나야르(Oren-Nayar) 모델과 같은 다른 확산 반사 모델은 이러한 거칠기를 반영한다.
-
- 높은 산란과 낮은 흡수(high scattering and low absorption)를 모두 갖는 재료를 참여 매질(participating media) 또는 반투명 물질(translucent materials)이라고 한다. 예를 들어 연기, 우유, 피부, 옥 및 대리석이 있다. 광선의 들어오고 나가는 지점 사이의 차이가 더 이상 무시할 수 없는 것으로 간주되는 피하산란(subsurface scattering)의 추가 모델링으로 후자의 세 가지 렌더링이 가능할 수 있다. 연기 또는 안개와 같이 매우 다양하고 산란 및 흡수가 매우 낮은 매질을 정확하게 렌더링하려면 몬테카를로 시뮬레이션(Monte Carlo simulations)[^Monte]과 같은 훨씬 더 느린 방법이 요구될 수 있다.
-
 [^Monte]: 몬테카를로 시뮬레이션(Monte Carlo simulations) : 반복되는 랜덤 샘플링을 사용하여 발생하는 결과 범위의 가능성을 얻을 수 있는 계산 알고리즘의 한 유형. 몬테카를로 메서드 또는 다중 확률 시뮬레이션이라고도 하는 몬테카를로 시뮬레이션은 불확실한 사건의 가능한 결과를 추정하는 데 사용되는 수학적 기법이다.
 
-## Microfacet Theory
+### Microfacet Theory
 
 
 
