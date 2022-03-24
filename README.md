@@ -77,7 +77,7 @@ THE PBR GUIDE BY ALLEGORITHMIC - PART 1
  그러한 매질/물질(medium/material)에서 더 많은 빛이 이동할수록 더 많이 흡수 및/또는 산란된다. 따라서 물체의 두께는 빛이 얼마나 흡수되거나 산란되는지에 큰 역할을 한다. 두께 맵(thickness map)은 Figure 03과 같이 셰이더에 오브젝트의 두께를 설명하는 데 사용할 수 있다.
 
 <p align="center">
-  <img src="/img/figure02.png" alt="figure02" width="75%" height="75%" /> 
+  <img src="/img/figure02.jpg" alt="figure02" width="75%" height="75%" /> 
   <p align="center">
   Figure 02: 귀 뒤쪽으로부터 방사되는 산란광
   </p>
@@ -100,6 +100,22 @@ THE PBR GUIDE BY ALLEGORITHMIC - PART 1
 
 [^scattering_diffuse_difference]: 산란(Scattering)과 확산(Diffuse)의 차이 : 산란은 "어떤 매질에 빛이 입사되어 흡수되고 흡수된 매질의 원자를 파원으로 하여 사방으로 빛이 재방출되는 현상"을 의미한다.
 확산은 "어떤 매질에 일정 방향에서 입사한 빛이 반사 또는 투과된 후, 모든 방향으로 퍼지면서 진행하는 현상"이다. 확산은 난반사(Diffuse Reflection)를 일으킨다.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
