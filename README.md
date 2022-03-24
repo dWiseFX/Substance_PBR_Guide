@@ -32,11 +32,9 @@ THE PBR GUIDE BY ALLEGORITHMIC - PART 1
 
  서페이스에 닿는 광선을 입사광선이라고 하고 그것이 닿는 각도를 입사각이라고 한다.
 
-<img src="/img/figure01.jpg" width="40%" height="30%" title="10" alt="RubberDuck"></img>
 
 
-
-
+![Alt text](/path/img/figure01.png)
 
 
 
