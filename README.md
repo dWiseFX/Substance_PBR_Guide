@@ -10,7 +10,7 @@ THE PBR GUIDE BY ALLEGORITHMIC - PART 1
 * 광선(Light Rays)
 * 흡수(Absorption)와 산란(Scattering)[^scattering_diffuse_difference] - 투명도(Transparency)와 반투명(Translucency)
 * 확산(Diffuse)과 정반사(Specular Reflection) - 미세면 이론(Microfacet Theory)
-* Color
+* 색상(Color)
 * BRDF
 * Energy Conservation
 * Fresnel Effect - F0 (Fresnel Reflectance at 0 Degrees)
@@ -164,8 +164,6 @@ THE PBR GUIDE BY ALLEGORITHMIC - PART 1
   </p>
 </p>
 
-
-
 [^diffuse_ref]: 디퓨즈 리플렉션은 물질 내부에서 발생하는 산란으로 인해 표면의 거칠기를 무시 가능한 수준으로 무작위적인 방향으로 반사된다.
 
 [^roughness]: Roughness : 또한 대부분의 대중적인 렌더러에서 표면에 대한 거칠기를 Roughness라는 이름으로 나타낸다. 이때 일반적으로 거칠기가 증가하면 더 많은 확산으로 인해 부드러운 셰입의 반사를 얻을 수 있고, 거칠기가 감소하면 선명하고 날카로운 셰입의 반사를 얻을 수 있다.
@@ -175,12 +173,26 @@ THE PBR GUIDE BY ALLEGORITHMIC - PART 1
 [^BRDF]: BRDF : 양방향 반사도 분포 함수(Bidirectional Reflectance Distribution Function)는 빛이 불투명한 표면에서 어떤 방식으로 반사되는지를 정의하는 4차원 함수이다.
 
 
+## Color
+
+ 표면의 가시적인 색상은 광원에서 방출되는 파장에서 비롯된다. 이러한 파장은 물체에 흡수되고, 정반사 및 확산 반사된다. 그 흡수되는 파장 외 나머지 반사 파장을 우리가 색상으로 보는 것이다.
+ <!-- 해석에 문제 없는지 체크할 부분-->
+
+ 예를 들어, 사과의 피부는 대부분 붉은 빛을 반사한다. 빨간색 파장만 사과 껍질 외부로 다시 산란되고 나머지 파장은 흡수된다(Figure 09).
+
+ 사과는 또한 전기를 전도하지 않는 물질(유전체, dielectrics)로서(사과 껍질과 같이) 정반사가 파장에 거의 독립적이기 때문에 광원과 동일한 색상의 밝은 정반사 하이라이트를 갖는다. 이러한 물질의 경우 정반사에 색상이 지정되지 않는다. 이후 섹션에서 다양한 유형의 물질(금속 및 유전체)에 대해 논의할 것이다.
+
+ Substance PBR 셰이더는 GGX 미세면 분포(GGX microfacet distribution)를 사용한다.
+
+<p align="center">
+  <img src="/img/figure09.png" alt="figure09" width="75%" height="75%" /> 
+  <p align="center">
+  Figure 09: 적색 파장이 눈으로 반사된다.
+  </p>
+</p>
 
 
-
-
-
-
+## BRDF
 
 
 
