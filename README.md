@@ -12,7 +12,7 @@ THE PBR GUIDE BY ALLEGORITHMIC - PART 1
 * 확산(Diffuse)과 정반사(Specular Reflection) - 미세면 이론(Microfacet Theory)
 * 색상(Color)
 * 양방향 반사도 분포 함수(BRDF)
-* Energy Conservation
+* 에너지 보존(Energy Conservation)
 * Fresnel Effect - F0 (Fresnel Reflectance at 0 Degrees)
 * Conductors and Insulators - Metals and Non Metal
 * Linear Space Rendering
@@ -197,16 +197,32 @@ THE PBR GUIDE BY ALLEGORITHMIC - PART 1
 
  섭스턴스의 PBR 쉐이더에서 사용하는 BRDF는 Disney의 principled reflectance model을 기반으로 한다. 이 모델은 GGX 미세면 분포(GGX microfacet distribution)를 기반으로 한다. GGX는 반사 분포 측면에서 더 나은 솔루션 중 하나를 제공한다. 하이라이트에서 더 짧은 피크와 폴오프에서 더 긴 꼬리를 사용하여 더 사실적으로 보인다(Figure 10).
 
+<p align="center">
+  <img src="/img/figure10.png" alt="figure10" width="75%" height="75%" /> 
+  <p align="center">
+  Figure 10: GGX vs Blinn specular distribution - GGX는 specular distributio 측면에서 더 나은 솔루션 중 하나를 제공한다.
+  </p>
+</p>
 
 
+## Energy Conservation
+
+ 에너지 보존은 물리 기반 렌더링 솔루션에서 중요한 역할을 한다.[^energy_conservation] 이 원리는 표면에서 다시 방출되는 빛(반사 및 산란, reflected and scattered back)의 총량이 수신된 총량보다 적음을 나타낸다. 다시 말해, 표면에서 반사된 빛은 표면에 닿기 전보다 더 강렬하지 않다. 예술가로서 우리는 에너지 보존을 통제하는 것에 대해 걱정할 필요가 없다. 이것은 PBR의 장점 중 하나로, 에너지 보존은 항상 셰이더에 의해 시행된다. 이것은 물리 기반 모델의 일부이며 우리가 물리학보다 예술에 집중할 수 있도록 해준다.
+
+[^energy_conservation]: 에너지 보존 법칙(law of energy conservation) : 물리적 현상에 따라 한 물체에서 다른 물체로 에너지가 옮겨가거나 물체의 에너지가 다른 종류의 에너지로 변환할 때, 항상 자연계 전체의 에너지의 총량은 일정하게 보존된다는 법칙이다. 예를 들어 물체가 일정 위치에서 지상으로 떨어질 경우 위치에너지가 운동에너지로 변환되면서 속도가 증가하지만, 위치에너지와 운동에너지의 총합은 일정하게 보존된다.
 
 
+## Fresnel Effect
 
+ 프레넬 반사 인자(Fresnel reflection factor) 또한 BRDF의 계수로서 물리 기반 셰이딩에서 중요한 역할을 합니다. 프랑스 물리학자 Augustin-Jean Fresnel이 발견한 프레넬 효과(Fresnel Effect)는 표면에서 반사되는 빛의 양이 그것이 인지되는 시야각(viewing angle)에 따라 달라진다고 말한다. 물 웅덩이를 예로든다면, 물 표면에 수직으로하여 똑바로 아래를 볼 때 바닥까지 볼 수 있다. 이때 수면을 보는 것은 0도(zero degrees) 또는 수직 입사(normal incidence)[^normal_incidence]가 될 것이다(노말은 표면 법선). 수면에 더 평행한 스침 입사(grazing incidence)[^grazing_incidence]에서 물 웅덩이를 보면 수면의 정반사가 더 강해지는 것을 볼 수 있으며, 수면 아래는 전혀 볼 수 없을 수도 있다.
 
+ 프레넬은 우리가 전통적인 셰이딩에서 했던 것처럼 PBR에서 제어하는 것이 아니다. 다시 말하지만, 이것은 PBR 셰이더에 의해 처리되는 물리학의 또 다른 측면이다. 스침 입사에서 표면을 볼 때 모든 매끄러운 표면은 90도 입사각에서 거의 100%의 반사체가 된다.
 
+ 거친 표면의 경우 반사율은 스침 입사에 가까울 수록 점점 더 정반사화되지만 100% 정반사에 도달하지는 않는다. 여기서 가장 중요한 요소는 "macrosurface"의 법선과 빛이 이루는 각도가 아니라 각 미세면(microfacet)의 법선과 빛이 이루는 각도이다. 광선이 다른 방향으로 분산되기 때문에 반사가 더 부드럽거나 흐리게 보인다. 거시적 수준(macroscopic level)에서 발생하는 것은 집합적인 미세면(collective microfacets)에 대해 관찰할 모든 프레넬 효과의 평균과 다소 유사하다.
 
+[^normal_incidence]: 수직 입사(normal incidence) : 파동이 경계면에 충돌할 때 수직인 경우, 즉 입사각이 0도 일때 수직 입사라고 한다.
 
-
+[^grazing_incidence]: 스침 입사(grazing incidence) : 수직입사와는 다르게 입사각이 경계면의 법선에 대해 90도에 근접할 때 이러한 입사각을 스침각이라 하는데 이 스침각에서의 입사를 스침 입사라고 한다.
 
 
 
@@ -238,4 +254,7 @@ test line-----------------
 * <https://substance3d.adobe.com/tutorials/courses/the-pbr-guide-part-1>
 * <https://en.wikipedia.org/wiki/Texel_(graphics)>
 * <https://en.wikipedia.org/wiki/Bidirectional_reflectance_distribution_function#:~:text=The%20bidirectional%20reflectance%20distribution%20function,and%20in%20computer%20vision%20algorithms.>
-* 
+* <https://www.scienceall.com/%EC%97%90%EB%84%88%EC%A7%80-%EB%B3%B4%EC%A1%B4-%EB%B2%95%EC%B9%99law-of-energy-conservation-2/>
+* <https://glossary.oilfield.slb.com/en/terms/n/normal_incidence#:~:text=1.%20n.%20%5BGeophysics%5D,%2C%20two%2Dway%20traveltime%2C%20wave>
+* <https://wikipredia.net/ko/Normal_incidence>
+* <https://www.kps.or.kr/>
