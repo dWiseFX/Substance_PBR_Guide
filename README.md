@@ -11,7 +11,7 @@ THE PBR GUIDE BY ALLEGORITHMIC - PART 1
 * 흡수(Absorption)와 산란(Scattering)[^scattering_diffuse_difference] - 투명도(Transparency)와 반투명(Translucency)
 * 확산(Diffuse)과 정반사(Specular Reflection) - 미세면 이론(Microfacet Theory)
 * 색상(Color)
-* BRDF
+* 양방향 반사도 분포 함수(BRDF)
 * Energy Conservation
 * Fresnel Effect - F0 (Fresnel Reflectance at 0 Degrees)
 * Conductors and Insulators - Metals and Non Metal
@@ -176,7 +176,6 @@ THE PBR GUIDE BY ALLEGORITHMIC - PART 1
 ## Color
 
  표면의 가시적인 색상은 광원에서 방출되는 파장에서 비롯된다. 이러한 파장은 물체에 흡수되고, 정반사 및 확산 반사된다. 그 흡수되는 파장 외 나머지 반사 파장을 우리가 색상으로 보는 것이다.
- <!-- 해석에 문제 없는지 체크할 부분-->
 
  예를 들어, 사과의 피부는 대부분 붉은 빛을 반사한다. 빨간색 파장만 사과 껍질 외부로 다시 산란되고 나머지 파장은 흡수된다(Figure 09).
 
@@ -194,8 +193,9 @@ THE PBR GUIDE BY ALLEGORITHMIC - PART 1
 
 ## BRDF
 
+ 양방향 반사율 분포 함수(BRDF)는 표면의 반사율 속성을 설명하는 함수이다. 컴퓨터 그래픽에는 다양한 BRDF 모델이 있으며 그 중 일부는 물리적으로 설득력있지 않다. BRDF가 물리적으로 그럴듯해지기 위해서는 에너지를 보존(energy conserving)하고 상호성을 나타내야 한다. 상호성은 BRDF의 결과에 영향을 미치지 않고 들어오는 광선과 나가는 광선이 서로의 반전으로 간주될 수 있다는 헬름홀츠 상호성 원칙(Helmholtz Reciprocity Principle)를 나타낸다.
 
-
+ 섭스턴스의 PBR 쉐이더에서 사용하는 BRDF는 Disney의 principled reflectance model을 기반으로 한다. 이 모델은 GGX 미세면 분포(GGX microfacet distribution)를 기반으로 한다. GGX는 반사 분포 측면에서 더 나은 솔루션 중 하나를 제공한다. 하이라이트에서 더 짧은 피크와 폴오프에서 더 긴 꼬리를 사용하여 더 사실적으로 보인다(Figure 10).
 
 
 
