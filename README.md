@@ -9,7 +9,7 @@ THE PBR GUIDE BY ALLEGORITHMIC - PART 1
 ## TABLE OF CONTENTS
 * 광선(Light Rays)
 * 흡수(Absorption)와 산란(Scattering)[^scattering_diffuse_difference] - 투명도(Transparency)와 반투명(Translucency)
-* 확산(Diffuse)과 정반사(Specular Reflection) - 미세표면 이론(Microfacet Theory)
+* 확산(Diffuse)과 정반사(Specular Reflection) - 미세면 이론(Microfacet Theory)
 * Color
 * BRDF
 * Energy Conservation
@@ -141,16 +141,38 @@ THE PBR GUIDE BY ALLEGORITHMIC - PART 1
 [^Monte]: 몬테카를로 시뮬레이션(Monte Carlo simulations) : 반복되는 랜덤 샘플링을 사용하여 발생하는 결과 범위의 가능성을 얻을 수 있는 계산 알고리즘의 한 유형. 몬테카를로 메서드 또는 다중 확률 시뮬레이션이라고도 하는 몬테카를로 시뮬레이션은 불확실한 사건의 가능한 결과를 추정하는 데 사용되는 수학적 기법이다.
 
 ### Microfacet Theory
+ 이론적으로 확산 반사(diffuse)와 정반사(specular reflection) 모두 광선이 매질과 교차하는 표면의 불규칙성(surface irregularities)에 따라 달라진다. 그러나 실제로는 난반사(diffuse reflection)에 대한 거칠기의 영향은 물질 내부에서 발생하는 산란 때문에 덜 가시적이다. 결과적으로 광선이 반사되어 나가는 방향은 표면 거칠기와 입사 방향에 상당히 독립적이다.[^diffuse_ref] 확산 반사에 대한 가장 일반적인 모델(Lambertian)은 거칠기를 완전히 무시한다.
+
+ 이 가이드에서는 이러한 표면 불규칙성을 표면 거칠기(surface roughness)[^roughness]라고 한다. 표면 불규칙성은 사용 중인 PBR 워크플로우에 따라 거칠기, 부드러움, 광택 또는 미세 표면(roughness, smoothness, glossiness or micro-surface)을 비롯한 여러 다른 이름을 가질 수 있다. 이 모든 용어는 서브 텍셀[^texel](sub-texel)의 기하학적 세부사항인 서페이스의 동일한 측면(surface irregularities)을 설명한다.
+
+ 이러한 표면 불규칙성은 사용 중인 워크플로에 따라 거칠기(roughness) 또는 광택맵(glossiness map)에서 작성된다. 물리 기반 BRDF(physically-based BRDF)[^BRDF]는 표면이 미세면(microfacet)이라고 하는 다양한 방향의 소규모 평면 세부 표면(small-scaled planar detail surfaces of varying orientation)으로 구성되어 있다고 가정하는 미세면 이론(microfacet theory)을 기반으로 한다. 이 작은 평면 각각은 법선(normal)을 기반으로 한 방향(single direction)을 향해 빛을 반사한다(Figure 07).
+
+ 표면 법선(surface normal)이 조명 방향과 보기 방향(light direction and view direction) 사이의 정확히 중간 방향인 미세면은 가시광선을 반사한다. 그러나 미세표면 노말과 하프 노말이 동일한 경우 그림 07에서와 같이 일부 미세면이 그림자(빛 방향, light direction) 또는 마스킹(보기 방향, view direction)에 의해 차단되므로 모든 미세면이 기여하는 것은 아니다.
+
+ 미세한 수준(microscopic level)의 표면 불규칙성은 광 확산을 유발한다. 예를 들어, 흐릿한 반사는 산란된 광선으로 인해 발생한다. 광선은 평행하게 반사되지 않으므로 정반사를 흐리게 인식한다(Figure 08).
+
+<p align="center">
+  <img src="/img/figure07.png" alt="figure07" width="75%" height="75%" /> 
+  <p align="center">
+  Figure 07: 미세면 이론에 기반한 Physically-based BRDF
+  </p>
+</p>
+<p align="center">
+  <img src="/img/figure08.png" alt="figure08" width="75%" height="75%" /> 
+  <p align="center">
+  Figure 08: 산란된 광선에 의한 흐릿한 반사
+  </p>
+</p>
 
 
 
+[^diffuse_ref]: 디퓨즈 리플렉션은 물질 내부에서 발생하는 산란으로 인해 표면의 거칠기를 무시 가능한 수준으로 무작위적인 방향으로 반사된다.
 
+[^roughness]: Roughness : 또한 대부분의 대중적인 렌더러에서 표면에 대한 거칠기를 Roughness라는 이름으로 나타낸다. 이때 일반적으로 거칠기가 증가하면 더 많은 확산으로 인해 부드러운 셰입의 반사를 얻을 수 있고, 거칠기가 감소하면 선명하고 날카로운 셰입의 반사를 얻을 수 있다.
 
+[^texel]: Texel : 텍셀, 텍스처 엘리먼트 또는 텍스처 픽셀은 텍스처 맵의 기본 단위이다. 텍스처는 이미지가 픽셀 배열로 표현되는 것처럼 텍스처 공간을 나타내는 텍셀 배열로 표현된다.
 
-
-
-
-
+[^BRDF]: BRDF : 양방향 반사도 분포 함수(Bidirectional Reflectance Distribution Function)는 빛이 불투명한 표면에서 어떤 방식으로 반사되는지를 정의하는 4차원 함수이다.
 
 
 
@@ -201,3 +223,7 @@ test line-----------------
 * <https://www.scienceall.com/%ED%88%AC%EA%B3%BCtransmission/>
 * <https://www.ibm.com/kr-ko/cloud/learn/monte-carlo-simulation>
 * <https://ko.wikipedia.org/wiki/%EB%AA%AC%ED%85%8C%EC%B9%B4%EB%A5%BC%EB%A1%9C_%EB%B0%A9%EB%B2%95>
+* <https://substance3d.adobe.com/tutorials/courses/the-pbr-guide-part-1>
+* <https://en.wikipedia.org/wiki/Texel_(graphics)>
+* <https://en.wikipedia.org/wiki/Bidirectional_reflectance_distribution_function#:~:text=The%20bidirectional%20reflectance%20distribution%20function,and%20in%20computer%20vision%20algorithms.>
+* 
