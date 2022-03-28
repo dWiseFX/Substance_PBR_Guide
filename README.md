@@ -408,5 +408,4 @@ test line-----------------
 * <http://www.ktword.co.kr/test/view/view.php?m_temp1=4367>
 * <https://ko.wikipedia.org/wiki/%EC%A0%84%EA%B8%B0_%EC%A0%84%EB%8F%84%EC%B2%B4>
 * <https://ko.wikipedia.org/wiki/%EC%A0%88%EC%97%B0%EC%B2%B4>
-* <https://ko.wikipedia.org/wiki/%EC%A0%88%EC%97%B0%EC%B2%B4>
 * <https://handlespixels.wordpress.com/tag/f0-reflectance/>
