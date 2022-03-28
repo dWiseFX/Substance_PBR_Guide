@@ -320,57 +320,73 @@ THE PBR GUIDE BY ALLEGORITHMIC - PART 1
 </p>
 
 
+## Linear Space Rendering
+
+ 선형 공간 렌더링은 매우 복잡한 주제이다. 이 가이드에서는 선형 공간 렌더링이 조명 계산을 위한 올바른 계산을 제공한다는 단순한 접근 방식을 취할 것이다. 이는 신뢰할만한 실제 방식으로 표현될 수 있는 빛의 상호작용이 가능한 환경을 만들어준다. 선형 공간 렌더링에 대한 논의를 위해서는 감마 보정의 개념을 도입해야 한다. 디스플레이 및 저장 목적으로 이미지를 인코딩할 때 감마 보정은 대역폭과 비트 할당을 줄이는 최적화 프로세스이다. 이 프로세스는 대략적으로 휘도의 세제곱근을 따르는 인간의 눈의 밝기 인식을 활용한다.
+
+ HVS(Human Visual System)는 밝은 톤보다 어두운 톤의 상대적 차이에 더 민감하다. 이 때문에 감마 보정을 사용하지 않는 것은 HVS가 톤을 구별할 수 없는 톤 영역에 너무 많은 비트가 할당되기 때문에 낭비이다. 
+
+ 일반적인 디지털 이미지 생성 프로세스에서 이미지는 디스플레이 장치에 표시하기 위해 sRGB OETF 또는 감마 1 / 2.2[^oetf]와 같은 인코딩 감마 함수를 사용하여 인코딩된다. 그런 다음 디스플레이 장치 회로는 자체 디코딩 감마 함수인 EOTF[^eotf]를 사용하여 이미지를 디코딩한다. 컴퓨터 모니터의 감마 설정은 2.2인 경우가 많다.
+
+ 선형 색 공간에는 본질적으로 감마 보정이 없다. 이는 1.0의 유효 감마선에 해당하며, 이는 정확한 선형 계산을 산출한다. 그러나 렌더링된 이미지를 뷰어에게 올바르게 표시하려면 감마 공간으로 인코딩해야 한다.[^gamma_encoding]
+
+ 색상 값의 계산과 색상에 대한 연산은 선형 공간에서 수행된다. 이 프로세스는 감마 인코딩된 값을 색상 맵과 색상 선택기를 통해 모니터에서 보는 동안 선택한 색상의 선형 값으로 디코딩한다. 색상 관리 워크플로우에서 이 프로세스에는 일반적으로 선형으로 해석되거나 sRGB OETF 또는 감마 1 / 2.2로 인코딩된 것으로 해석되도록 텍스처 맵에 태그를 지정하는 작업이 포함된다. 그런 다음 선형 공간에서 계산이 수행되고 최종 렌더링된 결과는 sRGB OETF 또는 감마 1 / 2.2로 감마 인코딩된다.
+
+ 어떤 맵을 디코딩해야 하는지 고려하는 간단한 방법은 Substance Painter 또는 Substance Designer에서 내보낸 맵이 금속의 색조나 잔디의 녹색과 같이 보이는 색상(확산 반사 색상, diffuse reflected color)을 나타내는 경우 셰이더가 맵을 올바르게 해석하도록 감마 인코딩으로 플래그를 지정해야 한다. PBR 워크플로우에서 감마 인코딩으로 플래그가 지정되는 맵은 기본 색상, 확산, 반사 및 방사(base color, diffuse, specular and emissive)이다. 맵이 표면이 얼마나 거친지(거칠기 맵, roughness map) 또는 재질이 금속인지(금속 맵, metallic map) 같은 데이터를 나타내는 경우 선형으로 플래그가 지정되어야 한다. PBR 워크플로우에서 선형으로 플래그 지정되는 맵은 거칠기, 차폐, 법선(노말), 금속성 및 높이(roughness, ambient occlusion, normal, metallic, and height)이다.
+
+ Substance Designer 및 Substance Painter 내에서 셰이더에 대한 입력의 선형 공간과 감마 공간 간의 변환이 자동으로 처리된다. 렌더링된 뷰포트에서 계산된 결과에 대한 감마 보정도 마찬가지이다. 아티스트로서 우리는 일반적으로 소프트웨어가 기본적으로 처리하므로 Substance 소프트웨어 내에서 선형 계산 및 변환에 대해 걱정할 필요가 없다.
+
+ Substance Integration 플러그인을 통해 Substance 재질을 사용할 때 통합 및 호스트 응용 프로그램의 색상 관리를 통해 출력에 자동으로 선형/감마 공간(linear/gamma space) 플래그가 지정된다. 그러나 프로세스를 이해하는 것이 중요하다. Substance 맵이 Substance 재질이 아닌 내보낸 비트맵으로 사용되는 경우 사용 중인 렌더러에 따라 텍스처를 감마 인코딩하거나 선형으로 수동 플래그를 지정해야 할 수도 있다. 일반적으로 .png, .jpg, .tga 또는 .tif 파일은 감마 인코딩되는 반면 sRGB OETF 및 .exr 파일은 선형이다.
+
+ 감마 공간에서 선형 공간으로 변환하는 sRGB 디코딩 기능(EOTF)은 Substance Painter 및 Substance Designer*에서 사용되며 IEC 61966-2-1:1999 표준에 의해 다음과 같이 정의된다.
+
+<p align="center">
+  <img src="/img/figure_srgb_linear01.png" alt="figure_srgb_linear01" width="75%" height="75%" /> 
+</p>
+
+ *이 글의 작성 시점에서 Substance Designer의 선형에서 rgb 및 rgb에서 선형 노드(inear to rgb and rgb to linear nodes)는 최적화를 위해 이 공식을 사용하지 않는다. 이는 향후 릴리스에서 변경될 수 있다.
+
+ 단순화를 위해 이 가이드의 모든 변환에 대해 다음과 같은 단순화된(근사적인) 변환 함수를 대신 사용했다.
+
+<p align="center">
+  <img src="/img/figure_srgb_linear02.png" alt="figure_srgb_linear02" width="75%" height="75%" /> 
+</p>
+
+***
+_a. 기본 색도 좌표(chromaticity coordinates)는 주어진 RGB 색상 공간으로 인코딩할 수 있는 색역(색상 삼각형)을 정의한다._
+
+_b. 화이트포인트(white point)는 주어진 RGB 색상 공간에 대한 흰색을 정의한다._
+
+_c. 전달 함수는 선형 광 성분(3자극 값)과 비선형 RGB 비디오 신호(대부분의 경우 코딩 최적화 및 대역폭 성능) 간의 매핑을 수행한다._
+***
+
+[^oetf]: OETF : 감마 인코딩 함수의 기술명은 OETF(Opto-Electronic Transfer Function)이다.
+
+[^eotf]: OETF : 감마 디코딩 함수의 기술명은 EOTF(Electro-Optical Transfer Function)이다.
+
+[^gamma_encoding]: sRGB 색상 공간에서 sRGB OETF를 명확하게 하는 것이 매우 중요하다. OETF는 RGB 색상 공간을 만드는 세 가지 구성 요소 중 하나일 뿐이다.
 
 
+## Key Characteristics of PBR
+
+ 이제 물리학의 기본 이론을 살펴보았으므로 PBR의 몇 가지 주요 특성을 도출할 수 있다.
+
+ 1. 에너지 보존. 반사된 광선은 처음 표면에 부딪쳤을 때의 값보다 결코 밝지 않다. 에너지 보존은 셰이더에 의해 처리된다.
+
+ 2. 프레넬. BRDF는 셰이더에 의해 처리된다. F0 반사율 값은 가장 일반적인 유전체에 대해 최소한의 변화를 가지며 2-5% 범위에 속한다. 금속에 대한 F0는 70-100% 범위의 높은 값이다.
+
+ 3. 정반사의 강도(Specular intensity)는 BRDF, 거칠기 또는 광택 맵(glossiness map) 및 F0 반사율 값을 통해 제어된다.
+
+ 4. 조명 계산은 선형 공간에서 처리된다. 기본 색상 또는 확산(base color or diffuse)과 같은 감마 인코딩 값이 있는 모든 맵은 일반적으로 셰이더에 의해 선형으로 변환되지만 게임 엔진이나 렌더러에서 이미지를 가져올 때 적절한 옵션을 선택하여 변환이 제대로 처리되는지 확인해야 할 수도 있다. 거칠기, 광택, 금속성 및 높이와 같은 표면 속성을 설명하는 맵은 선형으로 해석되도록 설정해야 한다.
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+<!--
 test line-----------------
 
     code block
 
 test line-----------------
+-->
 
 ## reference
 * <https://substance3d.adobe.com/tutorials/courses/the-pbr-guide-part-1>
