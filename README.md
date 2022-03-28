@@ -15,8 +15,8 @@ THE PBR GUIDE BY ALLEGORITHMIC - PART 1
 * 에너지 보존(Energy Conservation)
 * 프레넬 효과(Fresnel Effect) - F0(Fresnel Reflectance at 0 Degrees)
 * 도체(Conductors)와 절연체(Insulators) - 금속과 비금속(Metals and Non Metal)
-* Linear Space Rendering
-* Key characteristics of PBR
+* 선형 공간 렌더링(Linear Space Rendering)
+* PBR의 주요 특성(Key characteristics of PBR)
 
 
 # THE THEORY OF PHYSICALLY-BASED RENDERING AND SHADING
@@ -229,7 +229,21 @@ THE PBR GUIDE BY ALLEGORITHMIC - PART 1
 
  빛이 표면에 직각 또는 수직으로(0도 각도로) 닿으면 해당 빛의 일정 비율이 정반사(specular)로 반사된다. 표면에 대한 굴절률(IOR)을 사용하여 반사되는 양을 도출할 수 있다. 이를 F0(Fresnel 0)라고 한다(Figure 11). 표면으로 굴절되는 빛의 양을 1 ~ F0이라고 한다.
 
- 가장 일반적인 유전체(dielectrics)의 F0 범위는 0.02-0.05(선형 값)이다. 도체(conductors)의 경우 F0 범위는 0.5-1.0이다. 따라서 표면의 반사율은 아래 방정식과 같이 굴절률에 의해 결정된다(Lagarde 2011).
+<p align="center">
+  <img src="/img/figure11.png" alt="figure11" width="75%" height="75%" /> 
+  <p align="center">
+  Figure 11: 매끄러운 유전체 표면의 경우 F0에서는 빛의 2-5%, 스침각에서는 100%를 반사한다.
+  </p>
+</p>
+
+ 가장 일반적인 유전체(dielectrics)의 F0 범위는 0.02-0.05(선형 값, linear values)이다. 도체(conductors)의 경우 F0 범위는 0.5-1.0이다. 따라서 표면의 반사율은 아래 방정식과 같이 굴절률에 의해 결정된다(Lagarde 2011).
+
+ <p align="center">
+  <img src="/img/figure11_f0.png" alt="figure11_f0" width="75%" height="75%" />
+  <p align="center">
+  Figure 11_2: n = refractive index(IOR)
+  </p>
+</p>
 
  텍스처 제작과 관련하여 관심을 갖는 것은 F0 반사율 값이다. 비금속<유전체/절연체, Non-metals(dielectrics/insulators)>은 그레이스케일 값을 가지며 금속(도체)은 RGB 값을 갖는다. PBR과 관련하여 반사율에 대한 예술적 해석을 통해 Figure 11과 같이 매끄러운 유전체 표면의 경우 F0은 빛의 2%에서 5%를 반사하고 스침 각도(grazing angles)에서 100%를 반사한다고 말할 수 있다.
 
@@ -243,6 +257,13 @@ THE PBR GUIDE BY ALLEGORITHMIC - PART 1
  PBR용 재질을 만들 때는 금속이나 비금속(metal or non-metal)의 관점에서 생각하는 것이 도움이 된다. 표면이 금속인지 아닌지 스스로에게 물어보고, 금속이라면 한 세트의 가이드라인을 따라야 한다. 그렇지 않은 경우 다른 지침을 따라야한다.
 
  이것은 일부 재질이 준금속(metalloids, 금속과 비금속의 혼합)과 같이 이러한 범주에 속하지 않을 수 있기 때문에 단순한 접근 방식일 수 있지만, 재질을 만드는 전체 과정에서 금속과 비금속을 구별하는 것은 좋은 접근 방식이며 메탈로이드는 예외이다. 재질에 대한 가이드라인을 설정하려면 먼저 우리가 만들고자 하는 것을 이해해야 한다. PBR을 사용하면 금속(도체, Conductors)[^conductor] [^thermal_conductor] [^electrical_conductor]과 비금속(절연체, Insulators)[^insulators]의 특성을 살펴보고 Figure 12와 같이 이러한 가이드라인 세트를 도출할 수 있다.
+
+<p align="center">
+  <img src="/img/figure12.png" alt="figure12" width="75%" height="75%" /> 
+  <p align="center">
+  Figure 12: 금속 및 비금속 재질 모두에 대한 F0 범위
+  </p>
+</p>
 
  굴절된 빛은 흡수되고 금속의 색조(color tint)는 반사된 빛에서 나오므로 맵에서 금속에 확산 색상(diffuse color)을 지정하지 않는다(diffuse = 0).
 
@@ -259,6 +280,13 @@ THE PBR GUIDE BY ALLEGORITHMIC - PART 1
 
  금속은 열과 전기의 좋은 도체이다. 전도성 금속의 전기장(electric field)은 0이며 전기장과 자기장으로 이루어진 입사 광파가 표면에 부딪힐 때 그 파동은 부분적으로 반사되고 굴절된 빛은 모두 흡수된다. 연마된 금속의 반사율 값은 약 70-100% 반사 범위로 높은 편이다(Figure 13).
 
+<p align="center">
+  <img src="/img/figure13.png" alt="figure13" width="75%" height="75%" /> 
+  <p align="center">
+  Figure 13: 금속의 반사율 값은 약 70-100% 정반사이다.
+  </p>
+</p>
+
  일부 금속은 다른 파장의 빛을 흡수한다. 예를 들어, 금은 가시 스펙트럼의 고주파수 끝에서 청색광을 흡수하므로 노란색으로 보이게된다. 그러나 굴절된 빛은 흡수되기 때문에 금속의 색조는 반사된 빛에서 나온다. 따라서 우리 맵에서는 금속에 확산 색상을 지정하지 않는다(diffuse = 0). 예를 들어, 반사광/광택(specular/gloss) 워크플로우에서 원금속(raw metal)은 디퓨즈 맵에서 검은색으로 설정되고 반사율 값은 반사광 맵(specular map)에서 착색된 색상 값이다. 금속의 경우 반사율 값은 RGB가 되며 착색될 수 있다. 물리 기반 모델 내에서 작업하고 있기 때문에 맵에서 금속 반사율에 대해 실제 측정 값을 사용해야 한다.
 
  텍스쳐링 측면에서 금속의 또 다른 중요한 점은 부식 경향이다. 이것은 풍화 요소(weathering elements)가 금속의 반사 상태에서 큰 역할을 할 수 있음을 의미한다. 금속이 녹슬면 금속의 반사 상태가 변경된다. 그런 다음 부식된 영역은 Figure 14와 같이 금속성 맵(metallic map)에서 검은색 값으로 표시된 유전체로 처리된다. 2부에서 논의할 것처럼 금속성/거칠기 워크플로우(metallic/roughness workflow)의 셰이더는 유전체의 F0 값을 4% 반사 하도록 하드코딩한다. Figure 14는 하드코딩된 F0 값이 4%인 확산 반사 색상(diffuse reflected color)으로 기본 색상 맵(base color map)의 녹슨 영역을 보여준다.
@@ -267,6 +295,12 @@ THE PBR GUIDE BY ALLEGORITHMIC - PART 1
 
  이 장의 시작 부분에서 언급했듯이 PBR 재질을 만들 때 재질이 금속인지 여부를 묻는 것이 도움이 된다. 더 정확하게 말하면, 질문에는 금속의 상태에 대한 정보도 포함되어야 한다. 금속이 칠해졌는지, 녹슬었는지, 흙이나 기름과 같은 다른 물질로 덮여 있는지 여부이다. 재질은 원금속이 아닌 경우 유전체로 처리된다. 풍화에 따라 풍화 요소가 금속의 반사 상태에서 역할을 하기 때문에 금속과 비금속이 혼합될 수 있다.
 
+<p align="center">
+  <img src="/img/figure14.png" alt="figure14" width="75%" height="75%" /> 
+  <p align="center">
+  Figure 14: 부식 영역(Corrosive areas)은 F0 값이 4% 반사인 유전체로 처리된다.
+  </p>
+</p>
 
 #### Non-Metals
 
@@ -278,7 +312,12 @@ THE PBR GUIDE BY ALLEGORITHMIC - PART 1
 
  일반적인 유전체의 값은 IOR에 의해 계산된 F0를 기준으로 약 2-5%이다. Figure 15에서 이 범위를 볼 수 있다.
 
-
+<p align="center">
+  <img src="/img/figure15.png" alt="figure15" width="75%" height="75%" /> 
+  <p align="center">
+  Figure 15: sRGB에서 선형으로의 변환은 감마 2.2 근사치를 사용하여 수행되었다 - 자세한 내용은 선형 공간 렌더링 섹션을 참조
+  </p>
+</p>
 
 
 
@@ -354,6 +393,4 @@ test line-----------------
 * <https://ko.wikipedia.org/wiki/%EC%A0%84%EA%B8%B0_%EC%A0%84%EB%8F%84%EC%B2%B4>
 * <https://ko.wikipedia.org/wiki/%EC%A0%88%EC%97%B0%EC%B2%B4>
 * <https://ko.wikipedia.org/wiki/%EC%A0%88%EC%97%B0%EC%B2%B4>
-* 
-
 * <https://handlespixels.wordpress.com/tag/f0-reflectance/>
