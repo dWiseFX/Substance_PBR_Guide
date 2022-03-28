@@ -224,6 +224,55 @@ THE PBR GUIDE BY ALLEGORITHMIC - PART 1
 
 [^grazing_incidence]: 스침 입사(grazing incidence) : 수직입사와는 다르게 입사각이 경계면의 법선에 대해 90도에 근접할 때 이러한 입사각을 스침각이라 하는데 이 스침각에서의 입사를 스침 입사라고 한다.
 
+### F0 (Fresnel Reflectance at 0 Degrees)
+
+ 빛이 표면에 직각 또는 수직으로(0도 각도로) 닿으면 해당 빛의 일정 비율이 정반사로 반사된다. 표면에 대한 굴절률(IOR)을 사용하여 반사되는 양을 도출할 수 있다. 이를 F0(Fresnel 0)라고 한다(Figure 11). 표면으로 굴절되는 빛의 양을 1–F0이라고 한다.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -242,6 +291,7 @@ test line-----------------
 test line-----------------
 
 ## reference
+* <https://substance3d.adobe.com/tutorials/courses/the-pbr-guide-part-1>
 * <https://www.fis.uni-bonn.de/en/recherchetools/infobox/professionals/what-remote-sensing/reflection-and-absorption>
 * <https://knowledge.autodesk.com/support/maya-lt/learn-explore/caas/CloudHelp/cloudhelp/2020/ENU/MayaLT-LightingShading/files/GUID-9158B659-5CA0-413B-8AD6-194E35A10FD8-htm.html>
 * <https://www.scienceall.com/%EB%A7%A4%EC%A7%88medium-%E5%AA%92%E8%B3%AA/>
@@ -251,7 +301,6 @@ test line-----------------
 * <https://www.scienceall.com/%ED%88%AC%EA%B3%BCtransmission/>
 * <https://www.ibm.com/kr-ko/cloud/learn/monte-carlo-simulation>
 * <https://ko.wikipedia.org/wiki/%EB%AA%AC%ED%85%8C%EC%B9%B4%EB%A5%BC%EB%A1%9C_%EB%B0%A9%EB%B2%95>
-* <https://substance3d.adobe.com/tutorials/courses/the-pbr-guide-part-1>
 * <https://en.wikipedia.org/wiki/Texel_(graphics)>
 * <https://en.wikipedia.org/wiki/Bidirectional_reflectance_distribution_function#:~:text=The%20bidirectional%20reflectance%20distribution%20function,and%20in%20computer%20vision%20algorithms.>
 * <https://www.scienceall.com/%EC%97%90%EB%84%88%EC%A7%80-%EB%B3%B4%EC%A1%B4-%EB%B2%95%EC%B9%99law-of-energy-conservation-2/>
