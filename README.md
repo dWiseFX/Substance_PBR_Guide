@@ -13,8 +13,8 @@ THE PBR GUIDE BY ALLEGORITHMIC - PART 1
 * 색상(Color)
 * 양방향 반사도 분포 함수(BRDF)
 * 에너지 보존(Energy Conservation)
-* Fresnel Effect - F0 (Fresnel Reflectance at 0 Degrees)
-* Conductors and Insulators - Metals and Non Metal
+* 프레넬 효과(Fresnel Effect) - F0(Fresnel Reflectance at 0 Degrees)
+* 도체(Conductors)와 절연체(Insulators) - 금속과 비금속(Metals and Non Metal)
 * Linear Space Rendering
 * Key characteristics of PBR
 
@@ -140,7 +140,7 @@ THE PBR GUIDE BY ALLEGORITHMIC - PART 1
 
 [^Monte]: 몬테카를로 시뮬레이션(Monte Carlo simulations) : 반복되는 랜덤 샘플링을 사용하여 발생하는 결과 범위의 가능성을 얻을 수 있는 계산 알고리즘의 한 유형. 몬테카를로 메서드 또는 다중 확률 시뮬레이션이라고도 하는 몬테카를로 시뮬레이션은 불확실한 사건의 가능한 결과를 추정하는 데 사용되는 수학적 기법이다.
 
-### Microfacet Theory
+#### Microfacet Theory
  이론적으로 확산 반사(diffuse)와 정반사(specular reflection) 모두 광선이 매질과 교차하는 표면의 불규칙성(surface irregularities)에 따라 달라진다. 그러나 실제로는 난반사(diffuse reflection)에 대한 거칠기의 영향은 물질 내부에서 발생하는 산란 때문에 덜 가시적이다. 결과적으로 광선이 반사되어 나가는 방향은 표면 거칠기와 입사 방향에 상당히 독립적이다.[^diffuse_ref] 확산 반사에 대한 가장 일반적인 모델(Lambertian)은 거칠기를 완전히 무시한다.
 
  이 가이드에서는 이러한 표면 불규칙성을 표면 거칠기(surface roughness)[^roughness]라고 한다. 표면 불규칙성은 사용 중인 PBR 워크플로우에 따라 거칠기, 부드러움, 광택 또는 미세 표면(roughness, smoothness, glossiness or micro-surface)을 비롯한 여러 다른 이름을 가질 수 있다. 이 모든 용어는 서브 텍셀[^texel](sub-texel)의 기하학적 세부사항인 서페이스의 동일한 측면(surface irregularities)을 설명한다.
@@ -179,7 +179,7 @@ THE PBR GUIDE BY ALLEGORITHMIC - PART 1
 
  예를 들어, 사과의 피부는 대부분 붉은 빛을 반사한다. 빨간색 파장만 사과 껍질 외부로 다시 산란되고 나머지 파장은 흡수된다(Figure 09).
 
- 사과는 또한 전기를 전도하지 않는 물질(유전체, dielectrics)로서(사과 껍질과 같이) 정반사가 파장에 거의 독립적이기 때문에 광원과 동일한 색상의 밝은 정반사 하이라이트를 갖는다. 이러한 물질의 경우 정반사에 색상이 지정되지 않는다. 이후 섹션에서 다양한 유형의 물질(금속 및 유전체)에 대해 논의할 것이다.
+ 사과는 또한 전기를 전도하지 않는 물질(유전체, dielectrics)[^dielectrics]로서(사과 껍질과 같이) 정반사가 파장에 거의 독립적이기 때문에 광원과 동일한 색상의 밝은 정반사 하이라이트를 갖는다. 이러한 물질의 경우 정반사에 색상이 지정되지 않는다. 이후 섹션에서 다양한 유형의 물질(금속 및 유전체)에 대해 논의할 것이다.
 
  Substance PBR 셰이더는 GGX 미세면 분포(GGX microfacet distribution)를 사용한다.
 
@@ -190,6 +190,7 @@ THE PBR GUIDE BY ALLEGORITHMIC - PART 1
   </p>
 </p>
 
+[^dielectrics]: 유전체(dielectric) : 도체와 달리 유전체는 절연체이므로 전하가 통과하지 않는다.
 
 ## BRDF
 
@@ -224,14 +225,50 @@ THE PBR GUIDE BY ALLEGORITHMIC - PART 1
 
 [^grazing_incidence]: 스침 입사(grazing incidence) : 수직입사와는 다르게 입사각이 경계면의 법선에 대해 90도에 근접할 때 이러한 입사각을 스침각이라 하는데 이 스침각에서의 입사를 스침 입사라고 한다.
 
-### F0 (Fresnel Reflectance at 0 Degrees)
+#### F0 (Fresnel Reflectance at 0 Degrees)
 
- 빛이 표면에 직각 또는 수직으로(0도 각도로) 닿으면 해당 빛의 일정 비율이 정반사로 반사된다. 표면에 대한 굴절률(IOR)을 사용하여 반사되는 양을 도출할 수 있다. 이를 F0(Fresnel 0)라고 한다(Figure 11). 표면으로 굴절되는 빛의 양을 1–F0이라고 한다.
+ 빛이 표면에 직각 또는 수직으로(0도 각도로) 닿으면 해당 빛의 일정 비율이 정반사(specular)로 반사된다. 표면에 대한 굴절률(IOR)을 사용하여 반사되는 양을 도출할 수 있다. 이를 F0(Fresnel 0)라고 한다(Figure 11). 표면으로 굴절되는 빛의 양을 1 ~ F0이라고 한다.
+
+ 가장 일반적인 유전체(dielectrics)의 F0 범위는 0.02-0.05(선형 값)이다. 도체(conductors)의 경우 F0 범위는 0.5-1.0이다. 따라서 표면의 반사율은 아래 방정식과 같이 굴절률에 의해 결정된다(Lagarde 2011).
+
+ 텍스처 제작과 관련하여 관심을 갖는 것은 F0 반사율 값이다. 비금속<유전체/절연체, Non-metals(dielectrics/insulators)>은 그레이스케일 값을 가지며 금속(도체)은 RGB 값을 갖는다. PBR과 관련하여 반사율에 대한 예술적 해석을 통해 Figure 11과 같이 매끄러운 유전체 표면의 경우 F0은 빛의 2%에서 5%를 반사하고 스침 각도(grazing angles)에서 100%를 반사한다고 말할 수 있다.
+
+ 유전체(비금속) 반사율 값은 실제로 크게 변하지 않는다.(유전체의 반사율 값이 대부분 크게 차이를 보이지 않음.) 사실, 거칠기에 의해 변경될 때 값의 실제 변화는 알아보기 어려울 수 있다. 그러나 값에는 차이가 있다. Figure 12에서 금속 및 비금속 물질 모두에 대한 F0 범위를 보여주는 차트를 볼 수 있다.
+
+ 비금속의 범위는 서로 크게 다르지 않다. 보석은 값이 더 높기 때문에 예외이다. F0는 특히 도체(conductors)나 절연체(insulators)에 관한 것이므로 잠시 후에 논의할 것이다.
 
 
+## Conductors and Insulators(Metals and Non-Metals)
+
+ PBR용 재질을 만들 때는 금속이나 비금속(metal or non-metal)의 관점에서 생각하는 것이 도움이 된다. 표면이 금속인지 아닌지 스스로에게 물어보고, 금속이라면 한 세트의 가이드라인을 따라야 한다. 그렇지 않은 경우 다른 지침을 따라야한다.
+
+ 이것은 일부 재질이 준금속(metalloids, 금속과 비금속의 혼합)과 같이 이러한 범주에 속하지 않을 수 있기 때문에 단순한 접근 방식일 수 있지만, 재질을 만드는 전체 과정에서 금속과 비금속을 구별하는 것은 좋은 접근 방식이며 메탈로이드는 예외이다. 재질에 대한 가이드라인을 설정하려면 먼저 우리가 만들고자 하는 것을 이해해야 한다. PBR을 사용하면 금속(도체, Conductors)[^conductor] [^thermal_conductor] [^electrical_conductor]과 비금속(절연체, Insulators)[^insulators]의 특성을 살펴보고 Figure 12와 같이 이러한 가이드라인 세트를 도출할 수 있다.
+
+ 굴절된 빛은 흡수되고 금속의 색조(color tint)는 반사된 빛에서 나오므로 맵에서 금속에 확산 색상(diffuse color)을 지정하지 않는다(diffuse = 0).
+
+[^conductor]: 도체(Conductor) : '전기 몇 '열'이 잘 통하는 도전성 물질.
+
+[^insulators]: 절연체(Insulator) : '전기'나 '열'을 전달하기 어려운 성질을 가지는 물질의 총칭.
+전기가 통하기 쉬운 '도체(전기 전도체)'에 비교해서 '부도체'라고도 한다. '절연체'는 '유전체(dielectric)'의 성질도 갖는다.
+
+[^thermal_conductor]: 열 전도체(Thermal Conductor) : 열이 잘 전달되는 물질.
+
+[^electrical_conductor]: 전기 전도체(Electrical Conductor) : 전도도가 높아서 전기가 통하기 쉬운 물질.
+
+#### Metals
+
+ 금속은 열과 전기의 좋은 도체이다. 전도성 금속의 전기장(electric field)은 0이며 전기장과 자기장으로 이루어진 입사 광파가 표면에 부딪힐 때 그 파동은 부분적으로 반사되고 굴절된 빛은 모두 흡수된다. 연마된 금속의 반사율 값은 약 70-100% 반사 범위로 높은 편이다(Figure 13).
+
+ 일부 금속은 다른 파장의 빛을 흡수한다. 예를 들어, 금은 가시 스펙트럼의 고주파수 끝에서 청색광을 흡수하므로 노란색으로 보이게된다. 그러나 굴절된 빛은 흡수되기 때문에 금속의 색조는 반사된 빛에서 나온다. 따라서 우리 맵에서는 금속에 확산 색상을 지정하지 않는다(diffuse = 0). 예를 들어, 반사광/광택(specular/gloss) 워크플로우에서 원금속(raw metal)은 디퓨즈 맵에서 검은색으로 설정되고 반사율 값은 반사광 맵(specular map)에서 착색된 색상 값이다. 금속의 경우 반사율 값은 RGB가 되며 착색될 수 있다. 물리 기반 모델 내에서 작업하고 있기 때문에 맵에서 금속 반사율에 대해 실제 측정 값을 사용해야 한다.
+
+ 텍스쳐링 측면에서 금속의 또 다른 중요한 점은 부식 경향이다. 이것은 풍화 요소(weathering elements)가 금속의 반사 상태에서 큰 역할을 할 수 있음을 의미한다. 금속이 녹슬면 금속의 반사 상태가 변경된다. 그런 다음 부식된 영역은 Figure 14와 같이 금속성 맵(metallic map)에서 검은색 값으로 표시된 유전체로 처리된다. 2부에서 논의할 것처럼 금속성/거칠기 워크플로우(metallic/roughness workflow)의 셰이더는 유전체의 F0 값을 4% 반사 하도록 하드코딩한다. Figure 14는 하드코딩된 F0 값이 4%인 확산 반사 색상(diffuse reflected color)으로 기본 색상 맵(base color map)의 녹슨 영역을 보여준다.
+
+ 또한 도색된 금속은 금속이 아닌 유전체로 취급된다. 페인트는 원금속(raw metal) 위에 레이어 역할을 한다. 페인트가 벗겨진 상태에서 노출된 원금속만 금속으로 처리된다. 금속에 묻은 먼지나 원금속을 흐리게하는 물질도 마찬가지이다.
+
+ 이 장의 시작 부분에서 언급했듯이 PBR 재질을 만들 때 재질이 금속인지 여부를 묻는 것이 도움이 된다. 더 정확하게 말하면, 질문에는 금속의 상태에 대한 정보도 포함되어야 한다. 금속이 칠해졌는지, 녹슬었는지, 흙이나 기름과 같은 다른 물질로 덮여 있는지 여부이다. 재질은 원금속이 아닌 경우 유전체로 처리된다. 풍화에 따라 풍화 요소가 금속의 반사 상태에서 역할을 하기 때문에 금속과 비금속이 혼합될 수 있다.
 
 
-
+#### Non-Metals
 
 
 
@@ -307,3 +344,10 @@ test line-----------------
 * <https://glossary.oilfield.slb.com/en/terms/n/normal_incidence#:~:text=1.%20n.%20%5BGeophysics%5D,%2C%20two%2Dway%20traveltime%2C%20wave>
 * <https://wikipredia.net/ko/Normal_incidence>
 * <https://www.kps.or.kr/>
+* <http://www.ktword.co.kr/test/view/view.php?m_temp1=4367>
+* <https://ko.wikipedia.org/wiki/%EC%A0%84%EA%B8%B0_%EC%A0%84%EB%8F%84%EC%B2%B4>
+* <https://ko.wikipedia.org/wiki/%EC%A0%88%EC%97%B0%EC%B2%B4>
+* <https://ko.wikipedia.org/wiki/%EC%A0%88%EC%97%B0%EC%B2%B4>
+* 
+
+* <https://handlespixels.wordpress.com/tag/f0-reflectance/>
