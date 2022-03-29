@@ -1,4 +1,4 @@
-THE PBR GUIDE - PART 1
+THE PBR GUIDE - PART 1[(원문 링크)](https://substance3d.adobe.com/tutorials/courses/the-pbr-guide-part-1)
 ===
 
 THE PBR GUIDE BY ALLEGORITHMIC - PART 1
@@ -7,16 +7,36 @@ THE PBR GUIDE BY ALLEGORITHMIC - PART 1
 
 # Light and Matter : The theory of Physically-Based Rendering and Shading
 ## TABLE OF CONTENTS
-* 광선(Light Rays)
-* 흡수(Absorption)와 산란(Scattering)[^scattering_diffuse_difference] - 투명도(Transparency)와 반투명(Translucency)
-* 확산(Diffuse)과 정반사(Specular Reflection) - 미세면 이론(Microfacet Theory)
-* 색상(Color)
-* 양방향 반사도 분포 함수(BRDF)
-* 에너지 보존(Energy Conservation)
-* 프레넬 효과(Fresnel Effect) - F0(Fresnel Reflectance at 0 Degrees)
-* 도체(Conductors)와 절연체(Insulators) - 금속과 비금속(Metals and Non Metal)
-* 선형 공간 렌더링(Linear Space Rendering)
-* PBR의 주요 특성(Key characteristics of PBR)
+* [광선(Light Rays)](#light-rays)
+
+* [흡수(Absorption)와 산란(Scattering)](#absorption-and-scattering-transparency-and-translucency)[^scattering_diffuse_difference] - 투명도(Transparency)와 반투명(Translucency)
+<!--
+동일 파일 내에서 문단(헤더) 이동 링크
+[노출 텍스트](문단 주소)
+1. 헤더 제목 문자열을 (문단 주소)에 기입.
+2. 문단 주소의 특수문자 제거.
+3. 문단 주소의 공백 '-(hyphen)'으로 대체.
+4. 문단 주소의 대문자를 소문자로 대체.
+5. 문잔 주소 문자열에 '-(hyphen)'이 있는 경우는 그대로 사용.
+* reference : https://ansohxxn.github.io/blog/markdown/#%EB%8F%99%EC%9D%BC-%ED%8C%8C%EC%9D%BC-%EB%82%B4%EC%97%90%EC%84%9C%EC%9D%98-%EB%AC%B8%EB%8B%A8%ED%97%A4%EB%8D%94-%EC%9D%B4%EB%8F%99-%EB%A7%81%ED%81%AC
+-->
+
+* [확산(Diffuse)과 정반사(Specular Reflection)](#diffuse-and-specular-reflection) -[미세면 이론(Microfacet Theory)](#microfacet-theory)
+
+* [색상(Color)](#color)
+
+* [양방향 반사도 분포 함수(BRDF)](#brdf)
+
+* [에너지 보존(Energy Conservation)](#energy-conservation)
+
+* [프레넬 효과(Fresnel Effect)](#fresnel-effect) - [F0(Fresnel Reflectance at 0 Degrees)](#f0-fresnel-reflectance-at-0-degrees)
+
+* [도체(Conductors)와 절연체(Insulators)](#conductors-and-insulatorsmetals-and-non-metals) - [금속(Metals)](#metals)과 [비금속(Non Metal)](#non-metals)
+
+* [선형 공간 렌더링(Linear Space Rendering)](#linear-space-rendering)
+
+* [PBR의 주요 특성(Key characteristics of PBR)](#key-characteristics-of-pbr)
+
 
 
 # THE THEORY OF PHYSICALLY-BASED RENDERING AND SHADING
@@ -174,7 +194,6 @@ THE PBR GUIDE BY ALLEGORITHMIC - PART 1
 
 
 ## Color
-
  표면의 가시적인 색상은 광원에서 방출되는 파장에서 비롯된다. 이러한 파장은 물체에 흡수되고, 정반사 및 확산 반사된다. 그 흡수되는 파장 외 나머지 반사 파장을 우리가 색상으로 보는 것이다.
 
  예를 들어, 사과의 피부는 대부분 붉은 빛을 반사한다. 빨간색 파장만 사과 껍질 외부로 다시 산란되고 나머지 파장은 흡수된다(Figure 09).
@@ -193,7 +212,6 @@ THE PBR GUIDE BY ALLEGORITHMIC - PART 1
 [^dielectrics]: 유전체(dielectric) : 도체와 달리 유전체는 절연체이므로 전하가 통과하지 않는다.
 
 ## BRDF
-
  양방향 반사율 분포 함수(BRDF)는 표면의 반사율 속성을 설명하는 함수이다. 컴퓨터 그래픽에는 다양한 BRDF 모델이 있으며 그 중 일부는 물리적으로 설득력있지 않다. BRDF가 물리적으로 그럴듯해지기 위해서는 에너지를 보존(energy conserving)하고 상호성을 나타내야 한다. 상호성은 BRDF의 결과에 영향을 미치지 않고 들어오는 광선과 나가는 광선이 서로의 반전으로 간주될 수 있다는 헬름홀츠 상호성 원칙(Helmholtz Reciprocity Principle)를 나타낸다.
 
  섭스턴스의 PBR 쉐이더에서 사용하는 BRDF는 Disney의 principled reflectance model을 기반으로 한다. 이 모델은 GGX 미세면 분포(GGX microfacet distribution)를 기반으로 한다. GGX는 반사 분포 측면에서 더 나은 솔루션 중 하나를 제공한다. 하이라이트에서 더 짧은 피크와 폴오프에서 더 긴 꼬리를 사용하여 더 사실적으로 보인다(Figure 10).
@@ -207,14 +225,12 @@ THE PBR GUIDE BY ALLEGORITHMIC - PART 1
 
 
 ## Energy Conservation
-
  에너지 보존은 물리 기반 렌더링 솔루션에서 중요한 역할을 한다.[^energy_conservation] 이 원리는 표면에서 다시 방출되는 빛(반사 및 산란, reflected and scattered back)의 총량이 수신된 총량보다 적음을 나타낸다. 다시 말해, 표면에서 반사된 빛은 표면에 닿기 전보다 더 강렬하지 않다. 예술가로서 우리는 에너지 보존을 통제하는 것에 대해 걱정할 필요가 없다. 이것은 PBR의 장점 중 하나로, 에너지 보존은 항상 셰이더에 의해 시행된다. 이것은 물리 기반 모델의 일부이며 우리가 물리학보다 예술에 집중할 수 있도록 해준다.
 
 [^energy_conservation]: 에너지 보존 법칙(law of energy conservation) : 물리적 현상에 따라 한 물체에서 다른 물체로 에너지가 옮겨가거나 물체의 에너지가 다른 종류의 에너지로 변환할 때, 항상 자연계 전체의 에너지의 총량은 일정하게 보존된다는 법칙이다. 예를 들어 물체가 일정 위치에서 지상으로 떨어질 경우 위치에너지가 운동에너지로 변환되면서 속도가 증가하지만, 위치에너지와 운동에너지의 총합은 일정하게 보존된다.
 
 
 ## Fresnel Effect
-
  프레넬 반사 인자(Fresnel reflection factor) 또한 BRDF의 계수로서 물리 기반 셰이딩에서 중요한 역할을 합니다. 프랑스 물리학자 Augustin-Jean Fresnel이 발견한 프레넬 효과(Fresnel Effect)는 표면에서 반사되는 빛의 양이 그것이 인지되는 시야각(viewing angle)에 따라 달라진다고 말한다. 물 웅덩이를 예로든다면, 물 표면에 수직으로하여 똑바로 아래를 볼 때 바닥까지 볼 수 있다. 이때 수면을 보는 것은 0도(zero degrees) 또는 수직 입사(normal incidence)[^normal_incidence]가 될 것이다(노말은 표면 법선). 수면에 더 평행한 스침 입사(grazing incidence)[^grazing_incidence]에서 물 웅덩이를 보면 수면의 정반사가 더 강해지는 것을 볼 수 있으며, 수면 아래는 전혀 볼 수 없을 수도 있다.
 
  프레넬은 우리가 전통적인 셰이딩에서 했던 것처럼 PBR에서 제어하는 것이 아니다. 다시 말하지만, 이것은 PBR 셰이더에 의해 처리되는 물리학의 또 다른 측면이다. 스침 입사에서 표면을 볼 때 모든 매끄러운 표면은 90도 입사각에서 거의 100%의 반사체가 된다.
@@ -226,7 +242,6 @@ THE PBR GUIDE BY ALLEGORITHMIC - PART 1
 [^grazing_incidence]: 스침 입사(grazing incidence) : 수직입사와는 다르게 입사각이 경계면의 법선에 대해 90도에 근접할 때 이러한 입사각을 스침각이라 하는데 이 스침각에서의 입사를 스침 입사라고 한다.
 
 #### F0 (Fresnel Reflectance at 0 Degrees)
-
  빛이 표면에 직각 또는 수직으로(0도 각도로) 닿으면 해당 빛의 일정 비율이 정반사(specular)로 반사된다. 표면에 대한 굴절률(IOR)을 사용하여 반사되는 양을 도출할 수 있다. 이를 F0(Fresnel 0)라고 한다(Figure 11). 표면으로 굴절되는 빛의 양을 1 ~ F0이라고 한다.
 
 <p align="center">
@@ -253,7 +268,6 @@ THE PBR GUIDE BY ALLEGORITHMIC - PART 1
 
 
 ## Conductors and Insulators(Metals and Non-Metals)
-
  PBR용 재질을 만들 때는 금속이나 비금속(metal or non-metal)의 관점에서 생각하는 것이 도움이 된다. 표면이 금속인지 아닌지 스스로에게 물어보고, 금속이라면 한 세트의 가이드라인을 따라야 한다. 그렇지 않은 경우 다른 지침을 따라야한다.
 
  이것은 일부 재질이 준금속(metalloids, 금속과 비금속의 혼합)과 같이 이러한 범주에 속하지 않을 수 있기 때문에 단순한 접근 방식일 수 있지만, 재질을 만드는 전체 과정에서 금속과 비금속을 구별하는 것은 좋은 접근 방식이며 메탈로이드는 예외이다. 재질에 대한 가이드라인을 설정하려면 먼저 우리가 만들고자 하는 것을 이해해야 한다. PBR을 사용하면 금속(도체, Conductors)[^conductor] [^thermal_conductor] [^electrical_conductor]과 비금속(절연체, Insulators)[^insulators]의 특성을 살펴보고 Figure 12와 같이 이러한 가이드라인 세트를 도출할 수 있다.
@@ -277,7 +291,6 @@ THE PBR GUIDE BY ALLEGORITHMIC - PART 1
 전기가 통하기 쉬운 '도체(전기 전도체)'에 비교해서 '부도체'라고도 한다. '절연체'는 '유전체(dielectric)'의 성질도 갖는다.
 
 #### Metals
-
  금속은 열과 전기의 좋은 도체이다. 전도성 금속의 전기장(electric field)은 0이며 전기장과 자기장으로 이루어진 입사 광파가 표면에 부딪힐 때 그 파동은 부분적으로 반사되고 굴절된 빛은 모두 흡수된다. 연마된 금속의 반사율 값은 약 70-100% 반사 범위로 높은 편이다(Figure 13).
 
 <p align="center">
@@ -303,7 +316,6 @@ THE PBR GUIDE BY ALLEGORITHMIC - PART 1
 </p>
 
 #### Non-Metals
-
  비금속(절연체/유전체, insulators/dielectrics)은 전기 전도성이 좋지 않다. 굴절된 빛이 산란 및/또는 흡수(종종 표면에서 다시 나타남)되므로 금속보다 훨씬 적은 양의 빛을 반사하고 알베도 색상을 갖는다.
 
  우리는 앞에서 일반적인 유전체의 값이 굴절률에 의해 계산된 F0를 기준으로 약 2-5%라고 말했다. 이 값은 Figure 12에서와 같이 0.017-0.067(40-75 sRGB)의 선형 범위 내에 포함된다. 보석과 같은 일부 비금속 재료를 제외하고 대부분의 유전체는 4%보다 큰 F0 값을 갖지 않는다.
@@ -321,7 +333,6 @@ THE PBR GUIDE BY ALLEGORITHMIC - PART 1
 
 
 ## Linear Space Rendering
-
  선형 공간 렌더링은 매우 복잡한 주제이다. 이 가이드에서는 선형 공간 렌더링이 조명 계산을 위한 올바른 계산을 제공한다는 단순한 접근 방식을 취할 것이다. 이는 신뢰할만한 실제 방식으로 표현될 수 있는 빛의 상호작용이 가능한 환경을 만들어준다. 선형 공간 렌더링에 대한 논의를 위해서는 감마 보정의 개념을 도입해야 한다. 디스플레이 및 저장 목적으로 이미지를 인코딩할 때 감마 보정은 대역폭과 비트 할당을 줄이는 최적화 프로세스이다. 이 프로세스는 대략적으로 휘도의 세제곱근을 따르는 인간의 눈의 밝기 인식을 활용한다.
 
  HVS(Human Visual System)는 밝은 톤보다 어두운 톤의 상대적 차이에 더 민감하다. 이 때문에 감마 보정을 사용하지 않는 것은 HVS가 톤을 구별할 수 없는 톤 영역에 너무 많은 비트가 할당되기 때문에 낭비이다. 
@@ -368,7 +379,6 @@ _c. 전달 함수는 선형 광 성분(3자극 값)과 비선형 RGB 비디오 �
 
 
 ## Key Characteristics of PBR
-
  이제 물리학의 기본 이론을 살펴보았으므로 PBR의 몇 가지 주요 특성을 도출할 수 있다.
 
  1. 에너지 보존. 반사된 광선은 처음 표면에 부딪쳤을 때의 값보다 결코 밝지 않다. 에너지 보존은 셰이더에 의해 처리된다.
