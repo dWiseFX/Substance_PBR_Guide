@@ -1,4 +1,4 @@
-THE PBR GUIDE - PART 1[(원문 링크)](https://substance3d.adobe.com/tutorials/courses/the-pbr-guide-part-1)
+[THE PBR GUIDE - PART 1](https://substance3d.adobe.com/tutorials/courses/the-pbr-guide-part-1)
 ===
 
 THE PBR GUIDE BY ALLEGORITHMIC - PART 1
