@@ -231,7 +231,7 @@ THE PBR GUIDE BY ALLEGORITHMIC - PART 1
 
 
 ## Fresnel Effect
- 프레넬 반사 인자(Fresnel reflection factor) 또한 BRDF의 계수로서 물리 기반 셰이딩에서 중요한 역할을 합니다. 프랑스 물리학자 Augustin-Jean Fresnel이 발견한 프레넬 효과(Fresnel Effect)는 표면에서 반사되는 빛의 양이 그것이 인지되는 시야각(viewing angle)에 따라 달라진다고 말한다. 물 웅덩이를 예로든다면, 물 표면에 수직으로하여 똑바로 아래를 볼 때 바닥까지 볼 수 있다. 이때 수면을 보는 것은 0도(zero degrees) 또는 수직 입사(normal incidence)[^normal_incidence]가 될 것이다(노말은 표면 법선). 수면에 더 평행한 스침 입사(grazing incidence)[^grazing_incidence]에서 물 웅덩이를 보면 수면의 정반사가 더 강해지는 것을 볼 수 있으며, 수면 아래는 전혀 볼 수 없을 수도 있다.
+ 프레넬 반사 인자(Fresnel reflection factor) 또한 BRDF의 계수로서 물리 기반 셰이딩에서 중요한 역할을 한다. 프랑스 물리학자 Augustin-Jean Fresnel이 발견한 프레넬 효과(Fresnel Effect)는 표면에서 반사되는 빛의 양이 그것이 인지되는 시야각(viewing angle)에 따라 달라진다고 말한다. 물 웅덩이를 예로든다면, 물 표면에 수직으로하여 똑바로 아래를 볼 때 바닥까지 볼 수 있다. 이때 수면을 보는 것은 0도(zero degrees) 또는 수직 입사(normal incidence)[^normal_incidence]가 될 것이다(노말은 표면 법선). 수면에 더 평행한 스침 입사(grazing incidence)[^grazing_incidence]에서 물 웅덩이를 보면 수면의 정반사가 더 강해지는 것을 볼 수 있으며, 수면 아래는 전혀 볼 수 없을 수도 있다.
 
  프레넬은 우리가 전통적인 셰이딩에서 했던 것처럼 PBR에서 제어하는 것이 아니다. 다시 말하지만, 이것은 PBR 셰이더에 의해 처리되는 물리학의 또 다른 측면이다. 스침 입사에서 표면을 볼 때 모든 매끄러운 표면은 90도 입사각에서 거의 100%의 반사체가 된다.
 
